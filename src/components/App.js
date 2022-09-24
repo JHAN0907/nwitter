@@ -5,6 +5,7 @@ import {authService} from "fbase";
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
 
   // useEffect는 특정한 상황에서 특정 행동을 하고 싶을 때 사용하는 것이다.
   // 최초의 1회만 작동하도록 함.
@@ -14,8 +15,10 @@ function App() {
     authService.onAuthStateChanged((user)=> {
       if(user){
         setIsLoggedIn(user);
+        setUserObj(user);
       } else{
         setIsLoggedIn(false);
+        setUserObj(null);
       }
       // 한번 이 함수가 작동했다면 로그인 됬든 안됬든 검사는 했으므로 초기화를 true로 설정
       setInit(true);
@@ -25,7 +28,7 @@ function App() {
   return (
     <>
       {
-        init ? <AppRouter isLoggedIn={isLoggedIn}/> : "initializing..."
+        init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/> : "initializing..."
       }
       <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
     </>

@@ -1,6 +1,7 @@
 // 버전이 바뀌어서 원하는 폴더를 지정할 때 compat을 추가해야 함
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -18,3 +19,5 @@ firebase.initializeApp(firebaseConfig);
 export const authService = firebase.auth();
 
 export const firebaseInstance = firebase;
+
+export const dbService = firebase.firestore();
