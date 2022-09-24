@@ -2,6 +2,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import "firebase/compat/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -17,7 +18,6 @@ firebase.initializeApp(firebaseConfig);
 // export const를 사용하면 auth Service의 이름을 가진체 사용할 수 있는 것으로 보인다.
 // 또한 export const를 여러개 사용하여 다수의 모듈을 내보낼 수도 있는 것 같다.
 export const authService = firebase.auth();
-
 export const firebaseInstance = firebase;
-
 export const dbService = firebase.firestore();
+export const storageService = firebase.storage();
