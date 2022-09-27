@@ -7,6 +7,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
 
+  const refreshUser = () =>{
+    const user = authService.currentUser;
+    setUserObj({
+      uid: user.uid,
+      displayName: user.displayName,
+      updateProfile: (args)=> user.updateProfile(args),
+    });
+  };
   // useEffect는 특정한 상황에서 특정 행동을 하고 싶을 때 사용하는 것이다.
   // 최초의 1회만 작동하도록 함.
   useEffect(()=>{
@@ -14,8 +22,11 @@ function App() {
     // 변화가 되었다면 작동하여 isLoggedIn 변수를 변화한다.
     authService.onAuthStateChanged((user)=> {
       if(user){
-        setIsLoggedIn(user);
-        setUserObj(user);
+        setUserObj({
+          uid: user.uid,
+          displayName: user.displayName,
+          updateProfile: (args)=> user.updateProfile(args),
+        });
       } else{
         setIsLoggedIn(false);
         setUserObj(null);
@@ -28,7 +39,7 @@ function App() {
   return (
     <>
       {
-        init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/> : "initializing..."
+        init ? <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser}/> : "initializing..."
       }
       {/* <footer>&copy; {new Date().getFullYear()} Nwitter</footer> */}
     </>
